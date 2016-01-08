@@ -1,10 +1,10 @@
 <?php
 /*
 @ Author: Ewere Diagboya
-@ Date: 21-11-2015
-@ Time: 1:04pm
+@ Date: 08-01-2016
+@ Time: 4:00pm
 @ Location: Ajah, Lagos
-@ Project: Superstore WS
+@ Project: RateMyProfessor
 */
 require_once "Slim/Slim.php";
 \Slim\Slim::registerAutoloader();
@@ -16,19 +16,26 @@ foreach ($kernel as $kernelFile) {
     require $kernelFile;
 }
 
-$app->get('/lickey/:key/:deviceid', function($key,$deviceid) use($app) {
-	$params = array('key'=>$key, 'deviceid'=>$deviceid);
-    $response = License::ValidateLicense($params);
-	$app->response()->header("Content-Type", "application/json");
-	echo json_encode($response, JSON_FORCE_OBJECT);
+$app->post('/login', function() use($app) {
+	$params = $app->request()->post();
+    $response = License::Login($params);
+	//$app->response()->header("Content-Type", "application/json");
+	//echo json_encode($response, JSON_FORCE_OBJECT);
+});
+
+$app->post("/sturegister", function () use($app) {
+   $params = $app->request()->post();
+   $response = License::StuRegister($params);
+   //$app->response()->header("Content-Type", "application/json");
+   //echo json_encode($response, JSON_FORCE_OBJECT);
 });
 
 
-$app->post("/storeinfo", function () use($app) {
+$app->post("/proregister", function () use($app) {
    $params = $app->request()->post();
-   $response = License::StoreInfo($params);
-   $app->response()->header("Content-Type", "application/json");
-   echo json_encode($response, JSON_FORCE_OBJECT);
+   $response = License::ProfRegister($params);
+   //$app->response()->header("Content-Type", "application/json");
+   //echo json_encode($response, JSON_FORCE_OBJECT);
 });
 
 $app->run();
