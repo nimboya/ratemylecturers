@@ -42,6 +42,7 @@ class User {
 		$response[] = array('error_code'=>'1','status'=>'failed','description'=>$errors);
 	}
 	return $response;
+   }
   }
 
   public static function Forgot($forgotparams) {
@@ -107,7 +108,6 @@ class User {
 	}
 	
 	if(empty($errors)) {
-		
 		$loginparams = array('email'=>$chparams['email'],'password'=>$oldpass);
 		$loginresp[] = User::Login($loginparams);
 		if($status['error_code'] == 0) {
@@ -127,15 +127,13 @@ class User {
   }
 
   
-  
   public static function UpdateProfile($regparams) {
 	   // Db Connection Utility
 	  $db = Utility::mysqlRes();
 	  $response = array();
 	  $errors = array();
 	  
-	  $name = isset($storeparams['name']) ? $storeparams['name'] : null;
-	  
+	  //$name = isset($storeparams['name']) ? $storeparams['name'] : null;
   }
   
   
@@ -145,12 +143,19 @@ class User {
 	  $response = array();
 	  $errors = array();
 	  
-	  $name = isset($storeparams['name']) ? $storeparams['name'] : null;
-	  $email = isset($storeparams['email']) ? $storeparams['email'] : null;
-	  $password = isset($storeparams['password']) ? $storeparams['password'] : null;
+	  $firstname = isset($regparams['firstname']) ? $regparams['firstname'] : null;
+	  $lastname = isset($regparams['lastname']) ? $regparams['lastname'] : null;
+	  $email = isset($regparams['email']) ? $regparams['email'] : null;
+	  $password = isset($regparams['password']) ? $regparams['password'] : null;
+	  $rpass = isset($regparams['rpass']) ? $regparams['rpass'] : null;
+	  
 	  // Input Validation
-	  if(strlen(trim($name)) === 0){
-        $errors[] = "Please enter your full name!";
+	  if(strlen(trim($firstname)) === 0){
+        $errors[] = "Please enter your firstname!";
+	  }
+	  
+	  if(strlen(trim($lastname)) === 0){
+        $errors[] = "Please enter your lastname!";
 	  }
 	  
 	  if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -160,9 +165,12 @@ class User {
 	  if(strlen(trim($password)) === 0){
         $errors[] = "Please enter your password!";
 	  }
-	  // DeviceID Parameter
 	  
-	  if(empty($errors)){
+	  if(trim($password) || trim($rpass)) {
+		$errors[] = "Your passwords does not match.";
+	  }
+	  
+	  if(empty($errors)) {
         //Process Registration.
 		$proc = $db->store->insert($storeparams);
 		$response[] = array('error_code'=>'0','status'=>'ok','description'=>'Success'); 

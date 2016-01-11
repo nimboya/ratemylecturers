@@ -10,13 +10,21 @@ require_once "Slim/Slim.php";
 \Slim\Slim::registerAutoloader();
 $app = new \Slim\Slim();
 
+
 // Import Kernel/Db Functions
 $kernel = (array)glob('kernel/*.php');
 foreach ($kernel as $kernelFile) {
     require $kernelFile;
 }
 
-$app->post('/login', function() use($app) {
+$app->post("/sturegister", function () use($app) {
+   $params = $app->request()->post();
+   $response = User::StuRegister($params);
+   $app->response()->header("Content-Type", "application/json");
+   echo json_encode($response, JSON_FORCE_OBJECT);
+});
+
+$app->post('/login', function () use($app) {
 	$params = $app->request()->post();
     $response = User::Login($params);
 	$app->response()->header("Content-Type", "application/json");
@@ -30,20 +38,12 @@ $app->post("/forgot", function () use($app) {
    echo json_encode($response, JSON_FORCE_OBJECT);
 });
 
-$app->post("/change", function() use($app)) {
+$app->post("/change", function () use($app) {
    $params = $app->request()->post();
    $response = User::ChangePassword($params);
    $app->response()->header("Content-Type", "application/json");
    echo json_encode($response, JSON_FORCE_OBJECT);
 });
-
-$app->post("/sturegister", function () use($app) {
-   $params = $app->request()->post();
-   $response = User::StuRegister($params);
-   $app->response()->header("Content-Type", "application/json");
-   echo json_encode($response, JSON_FORCE_OBJECT);
-});
-
 
 $app->post("/proregister", function () use($app) {
    $params = $app->request()->post();

@@ -5,14 +5,11 @@ $config = array();
 // MySQL CONFIG
 $config['mysqldbhost']   = 'localhost';
 $config['mysqldbuser']   = 'root';
-$config['mysqldbpass']   = 'ayo';
-$config['mysqldbname']   = 'ssapi';
+$config['mysqldbpass']   = 'password';
+$config['mysqldbname']   = 'rmp';
 $config['dbmethod'] = 'mysql:dbname=';
 Utility::saveConfig($config);
 Utility::mysqlRes();
-
-
-
 
 class Utility {
 	static $config = array();
