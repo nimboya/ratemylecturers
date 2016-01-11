@@ -18,22 +18,36 @@ foreach ($kernel as $kernelFile) {
 
 $app->post('/login', function() use($app) {
 	$params = $app->request()->post();
-    $response = License::Login($params);
-	//$app->response()->header("Content-Type", "application/json");
-	//echo json_encode($response, JSON_FORCE_OBJECT);
+    $response = User::Login($params);
+	$app->response()->header("Content-Type", "application/json");
+	echo json_encode($response, JSON_FORCE_OBJECT);
+});
+
+$app->post("/forgot", function () use($app) {
+   $params = $app->request()->post();
+   $response = User::Forgot($params);
+   $app->response()->header("Content-Type", "application/json");
+   echo json_encode($response, JSON_FORCE_OBJECT);
+});
+
+$app->post("/change", function() use($app)) {
+   $params = $app->request()->post();
+   $response = User::ChangePassword($params);
+   $app->response()->header("Content-Type", "application/json");
+   echo json_encode($response, JSON_FORCE_OBJECT);
 });
 
 $app->post("/sturegister", function () use($app) {
    $params = $app->request()->post();
-   $response = License::StuRegister($params);
-   //$app->response()->header("Content-Type", "application/json");
-   //echo json_encode($response, JSON_FORCE_OBJECT);
+   $response = User::StuRegister($params);
+   $app->response()->header("Content-Type", "application/json");
+   echo json_encode($response, JSON_FORCE_OBJECT);
 });
 
 
 $app->post("/proregister", function () use($app) {
    $params = $app->request()->post();
-   $response = License::ProfRegister($params);
+   $response = User::ProfRegister($params);
    //$app->response()->header("Content-Type", "application/json");
    //echo json_encode($response, JSON_FORCE_OBJECT);
 });
