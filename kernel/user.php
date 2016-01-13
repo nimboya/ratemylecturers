@@ -26,7 +26,7 @@ class User {
         $errors[] = "Email is not valid!";
 	}
 	
-	if(strlen(trim($name)) === 0){ {
+	if(strlen(trim($name)) === 0) {
         $errors[] = "Please enter password!";
 	}
 	
@@ -42,7 +42,6 @@ class User {
 		$response[] = array('error_code'=>'1','status'=>'failed','description'=>$errors);
 	}
 	return $response;
-   }
   }
 
   public static function Forgot($forgotparams) {
@@ -180,16 +179,18 @@ class User {
 	  return $response; 
   }
   
-  public static function ProfRegister($regparams) {
-	  
+  public static function ProfRegister($regparams) { 
+	// Db Connection Utility
 	  $db = Utility::mysqlRes();
 	  $response = array();
 	  $errors = array();
 	  
-	  $name = isset($storeparams['name']) ? $storeparams['name'] : null;
-	  $email = isset($storeparams['email']) ? $storeparams['email'] : null;
-	  $password = isset($storeparams['password']) ? $storeparams['password'] : null;
+	  $name = isset($regparams['name']) ? $regparams['name'] : null;
+	  $email = isset($regparams['email']) ? $regparams['email'] : null;
+	  $password = isset($regparams['password']) ? $regparams['password'] : null;
+	  $school = isset($regparams['school']) ? $regparams['school'] : null;
 	  // Input Validation
+	  
 	  if(strlen(trim($name)) === 0){
         $errors[] = "Please enter your full name!";
 	  }
@@ -201,11 +202,16 @@ class User {
 	  if(strlen(trim($password)) === 0){
         $errors[] = "Please enter your password!";
 	  }
+	  
+	  if(strlen(trim($password)) <= 6){
+        $errors[] = "Your password must not be less than 6 characters!";
+	  }
+	  
 	  // DeviceID Parameter
 	  
 	  if(empty($errors)){
         //Process Registration.
-		$proc = $db->store->insert($storeparams);
+		$proc = $db->store->insert($regparams);
 		$response[] = array('error_code'=>'0','status'=>'ok','description'=>'Success'); 
       } else {
 		$response[] = array('error_code'=>'1','status'=>'failed','description'=>$errors);
