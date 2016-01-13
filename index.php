@@ -48,8 +48,8 @@ $app->post("/change", function () use($app) {
 $app->post("/proregister", function () use($app) {
    $params = $app->request()->post();
    $response = User::ProfRegister($params);
-   //$app->response()->header("Content-Type", "application/json");
-   //echo json_encode($response, JSON_FORCE_OBJECT);
+   $app->response()->header("Content-Type", "application/json");
+   echo json_encode($response, JSON_FORCE_OBJECT);
 });
 
 $app->run();
