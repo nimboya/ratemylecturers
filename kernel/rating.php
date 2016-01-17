@@ -50,24 +50,12 @@ public static function SendRating($rating) {
 	if(empty($errors)) {
 		// Inserting Rating Data
 		$proc = $db->ratings->insert($rating);
-		$response[] = array('error_code'=>'0','status'=>'success','description'=>"Rating Sent");
+		$response = array('error_code'=>'0','status'=>'success','description'=>"Rating Sent");
 	} else {
-		$response[] = array('error_code'=>'1','status'=>'failed','description'=>$errors);
+		$response = array('error_code'=>'1','status'=>'failed','description'=>$errors);
 	}
 	return $response;
-  }
-
-	public static function GetProfile($profid) {
-		$db = Utility::mysqlRes();
-		$response = array();
-		
-		try {
-		  $professor = $db->profs()->where("id",$profid);
-		  $response = $professor;
-		} catch (Exception $ex) {
-		   $response[] = array('error_code'=>'0','status'=>"failed",'description'=>$ex->getMessage());
-		}
-		return $response;
-	}
+  }	
+	
 
 }
