@@ -19,9 +19,15 @@ foreach ($kernel as $kernelFile) {
 
 $app->post("/sturegister", function () use($app) {
    $params = $app->request()->post();
+   //if($params['authkey'] != Utility::authkey) {
+	//   $app->response->setStatus(401);
+	//   $resp = array('error'=>'true','description'=>'Unauthorized Access');
+	//   json_encode($resp);
+   //}
    $response = User::StuRegister($params);
    $app->response()->header("Content-Type", "application/json");
    echo json_encode($response, JSON_FORCE_OBJECT);
+   
 });
 
 $app->post('/login', function () use($app) {

@@ -26,7 +26,7 @@ class User {
         $errors[] = "Email is not valid!";
 	}
 	
-	if(strlen(trim($name)) === 0) {
+	if(strlen(trim($password)) === 0) {
         $errors[] = "Please enter password!";
 	}
 	
@@ -49,7 +49,7 @@ class User {
 	$response = array();
 	$errors = array();
 	
-	if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+	if(!filter_var($forgotparams['email'], FILTER_VALIDATE_EMAIL)) {
         $errors[] = "Email is not valid!";
 	}
 	

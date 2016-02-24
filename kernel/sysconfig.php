@@ -5,15 +5,18 @@ $config = array();
 // MySQL CONFIG
 $config['mysqldbhost']   = 'localhost';
 $config['mysqldbuser']   = 'root';
-$config['mysqldbpass']   = 'password';
+$config['mysqldbpass']   = '';
 $config['mysqldbname']   = 'rmp';
 $config['dbmethod'] = 'mysql:dbname=';
 Utility::saveConfig($config);
 Utility::mysqlRes();
 
+// API AuthKey
+
+
 class Utility {
 	static $config = array();
-	
+	static $authkey = "f7403b0ea9af1e8276c030a577d315cb";
 	public static function getConfig($key){
 		return self::$config[$key];
 	}
@@ -26,8 +29,7 @@ class Utility {
 		return self::$config;
 	}
 	
-	public static function mysqlRes() {
-            
+	public static function mysqlRes() {     
             try {
                 $dsn = self::getConfig('dbmethod').self::getConfig('mysqldbname');//$dbmethod.$dbname;
 		$pdo = new PDO($dsn, self::getConfig('mysqldbuser'), self::getConfig('mysqldbpass'));
