@@ -8,15 +8,15 @@ $config['mysqldbuser']   = 'root';
 $config['mysqldbpass']   = '';
 $config['mysqldbname']   = 'rmp';
 $config['dbmethod'] = 'mysql:dbname=';
+// API Auth Key
+$config['authkey'] = "f7403b0ea9af1e8276c030a577d315cb";
+
 Utility::saveConfig($config);
 Utility::mysqlRes();
-
-// API AuthKey
 
 
 class Utility {
 	static $config = array();
-	static $authkey = "f7403b0ea9af1e8276c030a577d315cb";
 	public static function getConfig($key){
 		return self::$config[$key];
 	}
