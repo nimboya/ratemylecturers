@@ -20,7 +20,11 @@ class User {
    
 	// Input Validation
 	$email = isset($loginparams['email']) ? $loginparams['email'] : null;
+<<<<<<< HEAD
 	$password = isset($loginparams['password']) ? sha1($loginparams['password']) : null;
+=======
+	$password = isset($loginparams['password']) ? $loginparams['password'] : null;
+>>>>>>> 1c1f9426c2ef9739c7a77982d800affc33aea455
 	
 	if(!filter_var(trim($email), FILTER_VALIDATE_EMAIL)) {
         $errors[] = "Email is not valid!";
@@ -31,11 +35,15 @@ class User {
 	}
 	
 	if(empty($errors)) {
+<<<<<<< HEAD
 		//$login = $db->students()->where("email",$loginparams['email'])
 		//$pverify = password_verify($loginparams['password'],$login['password']);
 		//$login = $db->students()->where("email",$loginparams['email'])->where("password",$pverify);
 		$pswd = sha1($loginparams['password']);
 		$login = $db->students()->where("email",$loginparams['email'])->where("password",$pswd);
+=======
+		$login = $db->students()->where("email",$loginparams['email'])->where("password",$loginparams['password']);
+>>>>>>> 1c1f9426c2ef9739c7a77982d800affc33aea455
 		
 		if($login->count()) {
 			$response = array('error_code'=>0,'status'=>'success','description'=>"Login Successful");
@@ -49,6 +57,7 @@ class User {
 	return $response;
   }
   
+<<<<<<< HEAD
   public static function SocialLogin($params) {	 
 	 $regresp = self::StuRegister($params);
 	 $regres = json_decode($regresp);
@@ -58,6 +67,19 @@ class User {
 	 else if(strstr($regres->description,"Email Already Used")) {
 		//session_start();
 		//$_SESSION['activeuser'] = $params['email'];
+=======
+  public static function SocialLogin($params) {
+	 $regresp = self::StuRegister($params);
+	 $regres = json_decode($regresp);
+	 if($regres->status == "ok") {
+		session_start();
+		$_SESSION['activeuser'] = $params['email'];
+		$response = array('error_code'=>0,'status'=>'success','description'=>"Login Successful");
+	 }
+	 else if(strstr($regres->description,"Email Already Used")) {
+		session_start();
+		$_SESSION['activeuser'] = $params['email'];
+>>>>>>> 1c1f9426c2ef9739c7a77982d800affc33aea455
 		$response = array('error_code'=>0,'status'=>'success','description'=>"Login Successful");
 	 }
 	 return $response;
@@ -79,6 +101,7 @@ class User {
 	
 	if(empty($errors)) {
 		$student = $db->students()->where("email",$forgotparams['email']);
+<<<<<<< HEAD
 		if($student->count()>0) {			
 			// Send a New Password
 			$newpassword = "RMP".mt_rand(10000000,99999999);
@@ -98,6 +121,21 @@ class User {
 		}
 		}
 	 else {
+=======
+		if($student->count()) {			
+			// Send a New Password
+			$newpassword = "RMP".mt_rand(10000000,99999999);
+			$data = array("email"=>$forgotparams['email'],"password"=>$newpassword);
+			$student->update($data);
+			mail($forgotparams['email'],"Your new password","Dear user, your new password is: $newpassword, <p>Thank you for using RateMyLectuers");
+			$response = array('error_code'=>0,'status'=>'ok','description'=>'Password Changed Successfully');
+		}
+		else {
+			$errors = implode(",",$errors);
+			$response = array('error_code'=>1,'status'=>'failed','description'=>$errors);
+		}
+	} else {
+>>>>>>> 1c1f9426c2ef9739c7a77982d800affc33aea455
 		$errors = implode(",",$errors);
 		$response = array('error_code'=>1,'status'=>'failed','description'=>$errors);
 	}
@@ -138,8 +176,12 @@ class User {
 		$loginresp[] = User::Login($loginparams);
 		if($status['error_code'] == 0) {
 			// Change the Password
+<<<<<<< HEAD
 			$dbnewpass = sha1($newpass);
 			$data = array("password"=>$dbnewpass);
+=======
+			$data = array("password"=>$newpass);
+>>>>>>> 1c1f9426c2ef9739c7a77982d800affc33aea455
 			$license = $db->students()->where('email',$chparams['email']);
 			$students->update($data);
 			
@@ -172,7 +214,10 @@ class User {
 	  $fullname = isset($regparams['fullname']) ? trim($regparams['fullname']) : null;
 	  $email = isset($regparams['email']) ? trim($regparams['email']) : null;
 	  $password = isset($regparams['password']) ? trim($regparams['password']) : null;
+<<<<<<< HEAD
 	  
+=======
+>>>>>>> 1c1f9426c2ef9739c7a77982d800affc33aea455
 	  $rpass = isset($regparams['rpass']) ? trim($regparams['rpass']) : null;
 	  
 	  // Input Validation
@@ -197,8 +242,11 @@ class User {
 	  }
 	  
 	  if(empty($errors)) {
+<<<<<<< HEAD
 	       // $salt= mcrypt_create_iv(12, MCRYPT_DEV_URANDOM);
 	    $password = crypt($password);
+=======
+>>>>>>> 1c1f9426c2ef9739c7a77982d800affc33aea455
 		$regparams = array('fullname'=>$fullname,'email'=>$email,'password'=>$password);
         //Process Registration.
 		$proc = $db->students->insert($regparams);
@@ -210,23 +258,36 @@ class User {
 	  return $response; 
   }
   
+<<<<<<< HEAD
   private static function EmailExists($email) { 
+=======
+  public static function EmailExists($email) {
+>>>>>>> 1c1f9426c2ef9739c7a77982d800affc33aea455
 	  $db = Utility::mysqlRes();
 	  $status = false;
 	  $response = array();
 	  $total = $db->students()->where("email",$email)->count();
 	  
 	  if ($total > 0) {
+<<<<<<< HEAD
 		  // Email Exists
 		  $status = false;
 	  } else {
 		  // Email Does not Exist
+=======
+		  $status = false;
+	  } else {
+>>>>>>> 1c1f9426c2ef9739c7a77982d800affc33aea455
 		  $status = true;
 	  }
 	  return $status;
   }
   
+<<<<<<< HEAD
    private static function EmailExistsProf($email) {
+=======
+   public static function EmailExistsProf($email) {
+>>>>>>> 1c1f9426c2ef9739c7a77982d800affc33aea455
 	  $db = Utility::mysqlRes();
 	  $status = false;
 	  $response = array();
@@ -285,12 +346,20 @@ class User {
   
   public static function GetProfProfile($getparams) {
 	$db = Utility::mysqlRes();
+<<<<<<< HEAD
           
 	$profid = isset($getparams['profid']) ? $getparams['profid'] : null;
 	try {
 	  $Lecturers = $db->Lecturers()->where("id", $profid);
 	  foreach($Lecturers as $Lecturer) {
 		$response = $Lecturer;
+=======
+	$profid = isset($getparams['userid']) ? $getparams['userid'] : null;
+	try {
+	  $professors = $db->profs()->where("id",$profid);
+	  foreach($professors as $professor) {
+		$response = $professor;
+>>>>>>> 1c1f9426c2ef9739c7a77982d800affc33aea455
 	  }
 	} catch (Exception $ex) {
 	   $response = array('error_code'=>0,'status'=>"failed",'description'=>$ex->getMessage());
@@ -298,6 +367,7 @@ class User {
 	return $response;
   }
   
+<<<<<<< HEAD
   public static function GetUserProfile_bad($params) {
 	$db = Utility::mysqlRes();
 	$userid = $params['userid'];
@@ -320,6 +390,8 @@ class User {
 	 return $response;
   }
   
+=======
+>>>>>>> 1c1f9426c2ef9739c7a77982d800affc33aea455
   public static function GetUserProfile($getparams) {
 	$db = Utility::mysqlRes();
 	$memberid = isset($getparams['userid']) ? $getparams['userid'] : null;
@@ -340,7 +412,10 @@ class User {
 	return $response;
   }
   
+<<<<<<< HEAD
   
+=======
+>>>>>>> 1c1f9426c2ef9739c7a77982d800affc33aea455
   public static function FindProfessor($params) {
 	  $db = Utility::mysqlRes();
 	  $q = strip_tags($params['q']);

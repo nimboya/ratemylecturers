@@ -4,9 +4,15 @@ require 'plugins/NotORM.php';
 $config = array();
 // MySQL CONFIG
 $config['mysqldbhost']   = 'localhost';
+<<<<<<< HEAD
 $config['mysqldbuser']   = 'ratemyle_rml';
 $config['mysqldbpass']   = 'Password@12!@';
 $config['mysqldbname']   = 'ratemyle_rmp';
+=======
+$config['mysqldbuser']   = 'root';
+$config['mysqldbpass']   = '';
+$config['mysqldbname']   = 'rmp';
+>>>>>>> 1c1f9426c2ef9739c7a77982d800affc33aea455
 $config['dbmethod'] = 'mysql:dbname=';
 // API Auth Key
 $config['authkey'] = "f7403b0ea9af1e8276c030a577d315cb";

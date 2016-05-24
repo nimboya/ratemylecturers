@@ -136,6 +136,7 @@ $app->post("/postrating",function() use($app) {
 	}
 });
 
+<<<<<<< HEAD
 
 
 $app->get("/getrating",function() use($app) {
@@ -151,6 +152,8 @@ $app->get("/getrating",function() use($app) {
     }
 });
 
+=======
+>>>>>>> 1c1f9426c2ef9739c7a77982d800affc33aea455
 $app->get("/ratingdetails",function() use($app) {
 	$params = $app->request()->get();
 	if($params['authkey'] == Utility::getConfig('authkey')) {	
@@ -164,6 +167,7 @@ $app->get("/ratingdetails",function() use($app) {
     }
 });
 
+<<<<<<< HEAD
 $app->post("/newlecturer",function() use($app) {
 	$params = $app->request()->post();
 	if($params['authkey'] == Utility::getConfig('authkey')) {	
@@ -204,6 +208,12 @@ $app->get("/myratings",function() use($app) {
 	$params = $app->request()->get();
 	if($params['authkey'] == Utility::getConfig('authkey')) {	
 		$response = Rating::Userratings($params);	
+=======
+$app->get("/getrating",function() use($app) {
+	$params = $app->request()->get();
+	if($params['authkey'] == Utility::getConfig('authkey')) {	
+		$response = Rating::ViewRatings($params);	
+>>>>>>> 1c1f9426c2ef9739c7a77982d800affc33aea455
 		$app->response()->header("Content-Type", "application/json");
 		echo json_encode($response, JSON_FORCE_OBJECT);
 	} else {
@@ -213,6 +223,7 @@ $app->get("/myratings",function() use($app) {
     }
 });
 
+<<<<<<< HEAD
 $app->post("/searchschool",function() use($app) {
 	$params = $app->request()->post();
 	if($params['authkey'] == Utility::getConfig('authkey')) {	
@@ -232,6 +243,14 @@ $app->get("/lecturerlist",function() use($app) {
 		$response = Search::lecturerlist($params);	
 		$app->response()->header("Content-Type", "application/json");
 		echo json_encode($response);
+=======
+$app->get("/ratingdetails",function() use($app) {
+	$params = $app->request()->get();
+	if($params['authkey'] == Utility::getConfig('authkey')) {	
+		$response = Rating::RatingDetails($params);	
+		$app->response()->header("Content-Type", "application/json");
+		echo json_encode($response, JSON_FORCE_OBJECT);
+>>>>>>> 1c1f9426c2ef9739c7a77982d800affc33aea455
 	} else {
 		$app->response->setStatus(401);
 		$resp = array('error'=>'true','description'=>'Unauthorized Access');
